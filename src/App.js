@@ -9,10 +9,11 @@ class App extends Component {
 
     this.state = {
       loading: false,
-      exchange_rate_usd: 67.00, //Default value
+      exchange_rate_usd: 67.50, //Default value
       koinex: {},
       gdax: {},
       cex:{},
+      zebpay:{},
       error: null,  
     };
   }
@@ -169,6 +170,81 @@ class App extends Component {
     .catch((error) => {
       console.log('Error', error);
     });
+
+    // Zebpay-BTC
+    fetch('https://www.zebapi.com/api/v1/market/ticker-new/btc/inr')
+    .then(response => {
+      return response.json().then(json => {
+        return response.ok ? json : Promise.reject(json);
+      });
+    })
+    .then((data) => {
+      this.setState(prevState => ({zebpay: {...prevState.zebpay, BTC: data.buy}}));
+      // this.setState({loading: false});
+    })
+    .catch((error) => {
+      console.log('Error', error);
+    });
+
+    // Zebpay-ETH
+    fetch('https://www.zebapi.com/api/v1/market/ticker-new/eth/inr')
+    .then(response => {
+      return response.json().then(json => {
+        return response.ok ? json : Promise.reject(json);
+      });
+    })
+    .then((data) => {
+      this.setState(prevState => ({zebpay: {...prevState.zebpay, ETH: data.buy}}));
+      // this.setState({loading: false});
+    })
+    .catch((error) => {
+      console.log('Error', error);
+    });
+
+    // Zebpay-BCH
+    fetch('https://www.zebapi.com/api/v1/market/ticker-new/bch/inr')
+    .then(response => {
+      return response.json().then(json => {
+        return response.ok ? json : Promise.reject(json);
+      });
+    })
+    .then((data) => {
+      this.setState(prevState => ({zebpay: {...prevState.zebpay, BCH: data.buy}}));
+      // this.setState({loading: false});
+    })
+    .catch((error) => {
+      console.log('Error', error);
+    });
+
+    // Zebpay-LTC
+    fetch('https://www.zebapi.com/api/v1/market/ticker-new/ltc/inr')
+    .then(response => {
+      return response.json().then(json => {
+        return response.ok ? json : Promise.reject(json);
+      });
+    })
+    .then((data) => {
+      this.setState(prevState => ({zebpay: {...prevState.zebpay, LTC: data.buy}}));
+      // this.setState({loading: false});
+    })
+    .catch((error) => {
+      console.log('Error', error);
+    });
+
+    // Zebpay-XRP
+    fetch('https://www.zebapi.com/api/v1/market/ticker-new/xrp/inr')
+    .then(response => {
+      return response.json().then(json => {
+        return response.ok ? json : Promise.reject(json);
+      });
+    })
+    .then((data) => {
+      this.setState(prevState => ({zebpay: {...prevState.zebpay, XRP: data.buy}}));
+      // this.setState({loading: false});
+    })
+    .catch((error) => {
+      console.log('Error', error);
+    });
     
     // Koinex
     fetch('https://koinex.in/api/ticker')
@@ -196,11 +272,12 @@ class App extends Component {
 
   // Render function
   render() {
-    // Console.log
-    // console.log(this.state.cex);
-
+    
     //Destructuring
-    const {loading, exchange_rate_usd, koinex, gdax, cex} = this.state;
+    const {loading, exchange_rate_usd, koinex, gdax, cex, zebpay} = this.state;
+    
+    // Console.log
+    // console.log(zebpay);
 
     if(loading) {
       return <div>Loading...</div>
@@ -210,13 +287,13 @@ class App extends Component {
       <div>
 
         <nav className="navbar navbar-expand-sm navbar-light bg-light">
-          <a class="navbar-brand abs" href="">Crypto Arbitrage Tracker</a>
-          <div class="navbar-collapse collapse" id="collapsingNavbar">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/theagilecoder/Crypto-Arbitrage-Tracker" data-target="#myModal" data-toggle="modal">
-                      <img id="github" src={github} alt="Source Code"/>
-                    </a>
+          <a className="navbar-brand abs" href="">Crypto Arbitrage Tracker</a>
+          <div className="navbar-collapse collapse" id="collapsingNavbar">
+            <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <a className="nav-link" href="https://github.com/theagilecoder/Crypto-Arbitrage-Tracker " rel="noopener noreferrer" target="_blank" data-target="#myModal" data-toggle="modal">
+                    <img id="github" src={github} alt="Source Code"/>
+                  </a>
                 </li>
             </ul>
           </div>
@@ -270,7 +347,39 @@ class App extends Component {
               <td>{koinex.BCH}</td>
               <td>{gdax.BCH && koinex.BCH? this.calculate(gdax.BCH, koinex.BCH) : ""}</td>
             </tr>
-            <tr className="table-active">
+            <tr className="table-info">
+              <td>GDAX</td>
+              <td>BTC</td>
+              <td>{gdax.BTC}</td>
+              <td>Zebpay</td>
+              <td>{zebpay.BTC}</td>
+              <td>{gdax.BTC && zebpay.BTC? this.calculate(gdax.BTC, zebpay.BTC) : ""}</td>
+            </tr>
+            <tr className="table-info">
+              <td>GDAX</td>
+              <td>ETH</td>
+              <td>{gdax.ETH}</td>
+              <td>Zebpay</td>
+              <td>{zebpay.ETH}</td>
+              <td>{gdax.ETH && zebpay.ETH? this.calculate(gdax.ETH, zebpay.ETH) : ""}</td>
+            </tr>
+            <tr className="table-info">
+              <td>GDAX</td>
+              <td>LTC</td>
+              <td>{gdax.LTC}</td>
+              <td>Zebpay</td>
+              <td>{zebpay.LTC}</td>
+              <td>{gdax.LTC && zebpay.LTC? this.calculate(gdax.LTC, zebpay.LTC) : ""}</td>
+            </tr>
+            <tr className="table-info">
+              <td>GDAX</td>
+              <td>BCH</td>
+              <td>{gdax.BCH}</td>
+              <td>Zebpay</td>
+              <td>{zebpay.BCH}</td>
+              <td>{gdax.BCH && zebpay.BCH? this.calculate(gdax.BCH, zebpay.BCH) : ""}</td>
+            </tr>
+            <tr className="table-warning">
               <td>CEX</td>
               <td>BTC</td>
               <td>{cex.BTC}</td>
@@ -278,7 +387,7 @@ class App extends Component {
               <td>{koinex.BTC}</td>
               <td>{cex.BTC && koinex.BTC? this.calculate(cex.BTC, koinex.BTC) : ""}</td>
             </tr>
-            <tr className="table-active">
+            <tr className="table-warning">
               <td>CEX</td>
               <td>ETH</td>
               <td>{cex.ETH}</td>
@@ -286,7 +395,7 @@ class App extends Component {
               <td>{koinex.ETH}</td>
               <td>{cex.ETH && koinex.ETH? this.calculate(cex.ETH, koinex.ETH) : ""}</td>
             </tr>
-            <tr className="table-active">
+            <tr className="table-warning">
               <td>CEX</td>
               <td>BCH</td>
               <td>{cex.BCH}</td>
@@ -294,7 +403,15 @@ class App extends Component {
               <td>{koinex.BCH}</td>
               <td>{cex.BCH && koinex.BCH? this.calculate(cex.BCH, koinex.BCH) : ""}</td>
             </tr>
-            <tr className="table-active">
+            <tr className="table-warning">
+              <td>CEX</td>
+              <td>XLM</td>
+              <td>{cex.XLM}</td>
+              <td>Koinex</td>
+              <td>{koinex.XLM}</td>
+              <td>{cex.XLM && koinex.XLM? this.calculate(cex.XLM, koinex.XLM) : ""}</td>
+            </tr>
+            <tr className="table-warning">
               <td>CEX</td>
               <td>XRP</td>
               <td>{cex.XRP}</td>
@@ -302,13 +419,13 @@ class App extends Component {
               <td>{koinex.XRP}</td>
               <td>{cex.XRP && koinex.XRP? this.calculate(cex.XRP, koinex.XRP) : ""}</td>
             </tr>
-            <tr className="table-active">
+            <tr className="table-light">
               <td>CEX</td>
-              <td>XLM</td>
-              <td>{cex.XLM}</td>
-              <td>Koinex</td>
-              <td>{koinex.XLM}</td>
-              <td>{cex.XLM && koinex.XLM? this.calculate(cex.XLM, koinex.XLM) : ""}</td>
+              <td>XRP</td>
+              <td>{cex.XRP}</td>
+              <td>Zebpay</td>
+              <td>{zebpay.XRP}</td>
+              <td>{cex.XRP && zebpay.XRP? this.calculate(cex.XRP, zebpay.XRP) : ""}</td>
             </tr>
           </tbody>
         </table>

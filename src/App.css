@@ -1,9 +1,13 @@
-nav > h3 {
-  margin-top: 10px;
+.navbar-brand {
+  font-size: 30px;
 }
 
-nav > img {
+#applogo {
   width: 70px;
+}
+
+#github {
+  width: 50px;
 }
 
 table {

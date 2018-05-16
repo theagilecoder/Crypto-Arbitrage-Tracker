@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import github from './github-icon.png';
 import './App.css';
 
 class App extends Component {
@@ -208,13 +208,22 @@ class App extends Component {
 
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <img src={logo} alt="logo"/>
-          <h3>Crypto Arbitrage Tracker</h3>
-        </nav>
+
+        <nav className="navbar navbar-expand-sm navbar-light bg-light">
+          <a class="navbar-brand abs" href="">Crypto Arbitrage Tracker</a>
+          <div class="navbar-collapse collapse" id="collapsingNavbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/theagilecoder/Crypto-Arbitrage-Tracker" data-target="#myModal" data-toggle="modal">
+                      <img id="github" src={github} alt="Source Code"/>
+                    </a>
+                </li>
+            </ul>
+          </div>
+        </nav>  
 
         <h5>Exchange Rate: {exchange_rate_usd} INR/USD</h5>
-        <h6>* Enable CORS chrome extension if some values are missing.</h6>
+        <h6>Enable <a href="https://chrome.google.com/webstore/detail/cors-toggle/jioikioepegflmdnbocfhgmpmopmjkim">CORS chrome extension</a> if some values are missing.</h6>
 
         <div className="container">
         <table className="table table-hover">
